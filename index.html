@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONEderland Consulting | Australian PR Course Finder 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#00235b;--navy-mid:#0a3470;--navy-light:#143f7f;--gold:#fecf06;--gold-light:#ffe566;
+  --gold-dim:rgba(254,207,6,0.15);--cream:#FAFBFE;--white:#FFFFFF;--gray-100:#F5F7FA;
+  --gray-200:#E2E6ED;--gray-400:#9A9590;--gray-600:#5A5550;--red:#C0392B;--green:#27AE60;
+  --teal:#1ABC9C;--serif:'Playfair Display',Georgia,serif;--sans:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--navy);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;opacity:.03;pointer-events:none;z-index:9999;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+.hero{background:var(--navy);position:relative;overflow:hidden;padding:3rem 1.5rem 2.5rem;text-align:center}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(ellipse at 30% 50%,rgba(254,207,6,0.08) 0%,transparent 50%),
+  radial-gradient(ellipse at 70% 80%,rgba(26,188,156,0.05) 0%,transparent 40%);animation:drift 20s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(-2%,1%)}}
+.hero-top{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;position:relative}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(254,207,6,0.12);
+  border:1px solid rgba(254,207,6,0.25);border-radius:100px;padding:.4rem 1.2rem;
+  font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:var(--serif);font-size:clamp(2rem,5vw,3.2rem);color:var(--white);font-weight:700;
+  line-height:1.15;margin-bottom:.75rem;position:relative}
+.hero h1 span{color:var(--gold)}
+.hero p{color:rgba(255,255,255,0.6);font-size:.95rem;max-width:520px;margin:0 auto 1.25rem;line-height:1.6}
+.hero-brand{font-family:var(--serif);font-size:1.75rem;font-weight:700;color:var(--gold);letter-spacing:.04em;margin-bottom:1rem;background:rgba(255,255,255,0.08);display:inline-block;padding:.5rem 2rem;border-radius:12px;border:1px solid rgba(255,255,255,0.08)}
+.hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat .num{font-family:var(--serif);font-size:1.8rem;font-weight:700;color:var(--gold)}
+.hero-stat .label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.4);margin-top:.15rem}
+
+.progress-wrap{position:sticky;top:0;z-index:100;background:var(--navy);border-bottom:1px solid rgba(254,207,6,0.15);padding:.75rem 1.5rem;display:none}
+.progress-wrap.show{display:block}
+.progress-inner{max-width:680px;margin:0 auto;display:flex;align-items:center;gap:1rem}
+.progress-label{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:600;white-space:nowrap}
+.progress-bar{flex:1;height:4px;background:rgba(255,255,255,0.08);border-radius:100px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:100px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.progress-count{font-size:.75rem;color:rgba(255,255,255,0.5);font-variant-numeric:tabular-nums}
+
+.container{max-width:680px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.screen{display:none}.screen.active{display:block}
+
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.question-card{background:var(--white);border-radius:16px;padding:2rem;border:1px solid var(--gray-200);
+  box-shadow:0 1px 3px rgba(0,0,0,0.04);opacity:0;transform:translateY(20px);animation:fadeUp .4s ease forwards}
+.q-number{font-family:var(--serif);font-size:2.2rem;font-weight:700;line-height:1;margin-bottom:.25rem;
+  -webkit-text-stroke:1px rgba(254,207,6,0.25);color:transparent}
+.q-label{font-weight:600;font-size:1.05rem;color:var(--navy);margin-bottom:.15rem;line-height:1.4}
+.q-hint{font-size:.8rem;color:var(--gray-400);margin-bottom:1.25rem;line-height:1.5}
+
+.section-divider{display:flex;align-items:center;gap:1rem;margin:0 0 1.25rem;padding:0 .5rem}
+.section-divider .line{flex:1;height:1px;background:var(--gray-200)}
+.section-divider .tag{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gray-400);font-weight:600;white-space:nowrap}
+
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{display:flex;align-items:center;gap:.85rem;padding:.85rem 1.1rem;border-radius:10px;
+  border:1.5px solid var(--gray-200);cursor:pointer;transition:all .2s ease;background:var(--white)}
+.option:hover{border-color:var(--gold);background:var(--gold-dim)}
+.option.selected{border-color:var(--gold);background:var(--gold-dim);box-shadow:0 0 0 3px rgba(254,207,6,0.1)}
+.option-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--gray-200);display:flex;align-items:center;
+  justify-content:center;flex-shrink:0;transition:all .2s ease}
+.option.selected .option-radio{border-color:var(--gold);background:var(--gold)}
+.option.selected .option-radio::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--white)}
+.option-text{font-size:.9rem;color:var(--navy);line-height:1.4}
+.option-text small{display:block;color:var(--gray-400);font-size:.75rem;margin-top:.15rem}
+
+.btn-back{background:none;border:none;color:var(--gray-400);font-size:.8rem;cursor:pointer;padding:.5rem 0;margin-top:.75rem;font-family:var(--sans)}
+.btn-back:hover{color:var(--gold)}
+
+.btn-start{display:inline-flex;align-items:center;gap:.6rem;background:var(--gold);color:var(--navy);
+  font-weight:700;font-size:1rem;padding:1rem 2.5rem;border-radius:100px;border:none;cursor:pointer;
+  letter-spacing:.02em;transition:all .25s ease;box-shadow:0 4px 20px rgba(254,207,6,0.3);font-family:var(--sans)}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(254,207,6,0.4);background:var(--gold-light)}
+
+/* Results */
+.results-panel{animation:fadeUp .5s ease forwards;opacity:0;transform:translateY(20px)}
+.score-ring{width:180px;height:180px;margin:0 auto 1.25rem;position:relative}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring .bg{fill:none;stroke:var(--gray-200);stroke-width:8}
+.score-ring .fg{fill:none;stroke:var(--gold);stroke-width:8;stroke-linecap:round;
+  stroke-dasharray:502;stroke-dashoffset:502;transition:stroke-dashoffset 1.5s cubic-bezier(.4,0,.2,1)}
+.score-ring .score-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem}
+.score-ring .score-num{font-family:var(--serif);font-size:2.6rem;font-weight:700;color:var(--navy);line-height:1}
+.score-ring .score-label{font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-400);line-height:1}
+.points-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem;margin-bottom:1.5rem}
+.points-tag{font-size:.7rem;background:var(--white);border:1px solid var(--gray-200);padding:.2rem .5rem;border-radius:6px;color:var(--gray-600)}
+
+.course-card{border-radius:16px;padding:1.25rem;margin-bottom:.75rem;cursor:pointer;transition:transform .2s ease;
+  border:1px solid var(--gray-200);background:var(--white)}
+.course-card:hover{transform:translateY(-2px)}
+.course-card.top{background:var(--navy);color:var(--white);border:2px solid var(--gold);box-shadow:0 8px 40px rgba(254,207,6,0.12)}
+.course-card .rec-badge{display:inline-block;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700;
+  color:var(--navy);background:var(--gold);padding:.25rem .7rem;border-radius:100px;margin-bottom:.6rem}
+.course-head{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.6rem}
+.course-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-weight:700;font-size:.85rem;flex-shrink:0;color:var(--white)}
+.course-meta{font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.15rem}
+.course-card .course-meta{color:var(--gray-400)}.course-card.top .course-meta{color:rgba(255,255,255,0.5)}
+.course-name{font-family:var(--serif);font-size:1.15rem;font-weight:700;line-height:1.2}
+.course-match{font-family:var(--serif);font-size:1.3rem;font-weight:700;flex-shrink:0;margin-left:auto}
+.match-high{color:var(--green)}.match-med{color:var(--gold)}.match-low{color:var(--gray-400)}
+.course-tags{display:flex;flex-wrap:wrap;gap:.35rem;font-size:.68rem;margin-top:.5rem}
+.course-tags span{padding:.2rem .5rem;border-radius:6px}
+.course-card .course-tags span{background:var(--gray-100);color:var(--gray-600)}
+.course-card.top .course-tags span{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7)}
+.course-details{margin-top:1rem;padding-top:1rem;display:none}
+.course-card .course-details{border-top:1px solid var(--gray-200)}
+.course-card.top .course-details{border-top:1px solid rgba(255,255,255,0.12)}
+.course-details.open{display:block}
+.detail-label{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
+.course-card .detail-label{color:var(--gray-400)}.course-card.top .detail-label{color:rgba(255,255,255,0.4)}
+.detail-row{display:flex;gap:.5rem;margin-bottom:.4rem;font-size:.82rem;line-height:1.5}
+.course-card .detail-row{color:var(--gray-600)}.course-card.top .detail-row{color:rgba(255,255,255,0.85)}
+.tap-hint{text-align:center;margin-top:.6rem;font-size:.7rem}
+.course-card .tap-hint{color:#bbb}.course-card.top .tap-hint{color:rgba(255,255,255,0.3)}
+
+.result-cta{text-align:center;padding:1.5rem;background:var(--navy);border-radius:14px;margin-top:1.25rem}
+.result-cta h3{font-family:var(--serif);font-size:1.3rem;color:var(--white);margin-bottom:.35rem}
+.result-cta p{font-size:.82rem;color:rgba(255,255,255,0.5);margin-bottom:1rem;line-height:1.5}
+.btn-book{display:inline-flex;align-items:center;gap:.5rem;background:var(--gold);color:var(--navy);
+  font-weight:700;font-size:.9rem;padding:.8rem 2rem;border-radius:100px;border:none;cursor:pointer;
+  transition:all .2s ease;text-decoration:none;font-family:var(--sans)}
+.btn-book:hover{background:var(--gold-light);transform:translateY(-1px)}
+.guarantee{display:flex;align-items:center;justify-content:center;gap:.4rem;margin-top:.75rem;font-size:.7rem;color:rgba(255,255,255,0.35)}
+.btn-retake{display:block;width:100%;margin-top:.75rem;background:none;border:1px solid var(--gray-200);
+  padding:.75rem;border-radius:10px;font-size:.82rem;color:var(--gray-400);cursor:pointer;font-family:var(--sans)}
+.btn-retake:hover{border-color:var(--gold);color:var(--gold)}
+.footer{text-align:center;padding:2rem 1.5rem;font-size:.7rem;color:var(--gray-400);line-height:1.6}
+.footer a{color:var(--gold)}
+@media(max-width:600px){.hero{padding:2rem 1.25rem 1.75rem}.question-card{padding:1.5rem 1.25rem}.hero-stats{gap:1.5rem}}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero" id="heroSection">
+  <div class="hero-top">
+    <img src="https://onederland.com.au/wp-content/uploads/2021/07/onederlancd-consulting-logo-white.png" alt="ONEderland Consulting" style="height:36px;object-fit:contain">
+    <div class="hero-badge"><span class="dot"></span> 2026 Edition</div>
+  </div>
+  <h1>Australian PR <span>Course Finder</span></h1>
+  <p>Answer 10 questions to discover which study pathway gives you the highest chance of permanent residency. Takes under 3 minutes.</p>
+  <div class="hero-brand">ONEderland Consulting</div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">98%</div><div class="label">Success Rate</div></div>
+    <div class="hero-stat"><div class="num">365+</div><div class="label">5-Star Reviews</div></div>
+    <div class="hero-stat"><div class="num">18yr</div><div class="label">Experience</div></div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-inner">
+    <div class="progress-label">Progress</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-count" id="progressCount">1 / 10</div>
+  </div>
+</div>
+
+<!-- CONTAINER -->
+<div class="container">
+
+  <!-- INTRO -->
+  <div class="screen active" id="introScreen" style="text-align:center;padding-top:1rem">
+    <button class="btn-start" onclick="startQuiz()">Start Assessment</button>
+    <p style="font-size:.75rem;color:var(--gray-400);margin-top:.75rem">No email required.</p>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div class="screen" id="quizScreen"></div>
+
+  <!-- RESULTS -->
+  <div class="screen" id="resultScreen"></div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>ONEderland Consulting</strong> | Australian Registered Migration Agency<br>
+  MARN 0961448 | Unit 16/28 Belmont Ave, Rivervale WA 6103<br>
+  This tool provides general guidance only and does not constitute migration advice.<br>
+  <a href="https://onederland.com.au">onederland.com.au</a>
+</div>
+
+<script>
+const QUESTIONS = [
+  {id:"age",section:"Personal Profile",label:"What is your age?",hint:"Age significantly affects points-based visa eligibility. Maximum points are awarded between 25-32.",
+    opts:[{v:"18-24",l:"18 - 24 years",s:"+25 points",pts:25},{v:"25-32",l:"25 - 32 years",s:"+30 points (maximum)",pts:30},{v:"33-39",l:"33 - 39 years",s:"+25 points",pts:25},{v:"40-44",l:"40 - 44 years",s:"+15 points",pts:15},{v:"45+",l:"45 or older",s:"Age limit for most skilled visas",pts:0}]},
+  {id:"qualification",label:"What is your highest completed qualification?",hint:"Australian and recognised international qualifications contribute to your points score.",
+    opts:[{v:"highschool",l:"High school / Year 12",s:"+0 points"},{v:"diploma",l:"Diploma or Advanced Diploma",s:"+10 points"},{v:"bachelor",l:"Bachelor's degree",s:"+15 points"},{v:"master",l:"Master's degree",s:"+15 points"},{v:"phd",l:"PhD / Doctorate",s:"+20 points"}]},
+  {id:"field",section:"Background & Skills",label:"What field is your highest qualification in?",hint:"Some courses have prerequisite subjects that affect your eligibility for entry.",
+    opts:[{v:"business",l:"Business / Marketing / Management"},{v:"education",l:"Education / Teaching"},{v:"health",l:"Health / Nursing / Allied Health"},{v:"it",l:"IT / Computer Science / Engineering"},{v:"social",l:"Social Sciences / Psychology / Arts"},{v:"other",l:"Other field"}]},
+  {id:"english",label:"What is your current English proficiency?",hint:"Based on IELTS overall band, PTE Academic, or equivalent test scores.",
+    opts:[{v:"below6",l:"Below IELTS 6.0 / Not yet tested",s:"May limit visa options",pts:0},{v:"6",l:"IELTS 6.0 - 6.5 (Competent)",s:"+0 points (minimum required)",pts:0},{v:"7",l:"IELTS 7.0 - 7.5 (Proficient)",s:"+10 points",pts:10},{v:"8",l:"IELTS 8.0+ (Superior)",s:"+20 points",pts:20}]},
+  {id:"budget",section:"Preferences & Constraints",label:"What is your total tuition budget?",hint:"Approximate amount you can invest in further study in Australia.",
+    opts:[{v:"low",l:"Under AUD $30,000",s:"TAFE and short postgrad options"},{v:"mid",l:"AUD $30,000 - $60,000",s:"Most graduate diplomas and some master's"},{v:"high",l:"AUD $60,000 - $100,000",s:"Full master's programs"},{v:"nolimit",l:"Over AUD $100,000",s:"All pathways available"}]},
+  {id:"time",label:"How long are you willing to study?",hint:"Duration of additional study you're prepared to commit to.",
+    opts:[{v:"1yr",l:"1 year or less",s:"Graduate diploma options"},{v:"2yr",l:"Up to 2 years",s:"Most master's programs"},{v:"3yr",l:"Up to 3 years",s:"Bachelor's or nursing grad-entry"},{v:"any",l:"Whatever it takes",s:"All pathways open"}]},
+  {id:"location",label:"Are you open to studying in a regional area?",hint:"Regional study adds 5 bonus points and unlocks the Subclass 491 pathway (+15 nomination points).",
+    opts:[{v:"metro",l:"No, metro only (Sydney, Melbourne, Brisbane)"},{v:"open",l:"Open to regional cities (Adelaide, Perth, Hobart, etc.)",s:"+5 regional study points"},{v:"anywhere",l:"Yes, anywhere including small towns",s:"+5 regional study points"}]},
+  {id:"language",section:"Points Boosters",label:"Do you speak a community language other than English?",hint:"The NAATI CCL test in your native language is worth 5 easy bonus points towards PR.",
+    opts:[{v:"indonesian",l:"Indonesian (Bahasa Indonesia)",s:"NAATI CCL available"},{v:"mandarin",l:"Mandarin Chinese",s:"NAATI CCL available"},{v:"hindi",l:"Hindi / Urdu / Punjabi",s:"NAATI CCL available"},{v:"other_asian",l:"Other Asian language",s:"Check NAATI availability"},{v:"other_lang",l:"Other community language",s:"Check NAATI availability"},{v:"none",l:"English only",s:"No NAATI points available"}]},
+  {id:"work_au",label:"Do you have Australian skilled work experience?",hint:"Must be in a nominated skilled occupation or closely related field.",
+    opts:[{v:"none",l:"None",s:"+0 points",pts:0},{v:"1yr",l:"1 - 2 years",s:"+5 points",pts:5},{v:"3yr",l:"3 - 4 years",s:"+10 points",pts:10},{v:"5yr",l:"5 - 7 years",s:"+15 points",pts:15},{v:"8yr",l:"8+ years",s:"+20 points",pts:20}]},
+  {id:"priority",label:"What matters most to you?",hint:"This helps us weight the course recommendation to your goals.",
+    opts:[{v:"speed",l:"Fastest possible PR",s:"Minimise time to permanent residency"},{v:"cost",l:"Lowest cost pathway",s:"Budget-friendly options first"},{v:"career",l:"Best long-term career prospects",s:"Earning potential and growth"},{v:"ease",l:"Easiest course to complete",s:"Accessible entry and workload"}]}
+];
+
+const COURSES = [
+  {id:"ece",name:"Early Childhood Education",qual:"Graduate Diploma",dur:"1 year",cost:"AUD $25K-$35K",occ:"Early Childhood Teacher",tier:2,timeline:"2-3 years",eng:"Moderate (ACECQA pathway)",pts:"65-75",icon:"EC",color:"var(--gold)",
+    strengths:["Shortest additional study (1 year)","Massive national shortage (21,000+ positions)","On every state's nomination list","No post-study work experience needed","Most affordable university-level pathway"],
+    considerations:["Requires supervised placements","Lower starting salary (~AUD $65K)","Must enjoy working with children"]},
+  {id:"nursing",name:"Nursing (Registered Nurse)",qual:"Bachelor (Grad Entry)",dur:"2-3 years",cost:"AUD $68K-$138K",occ:"Registered Nurse",tier:1,timeline:"2-3 years after graduation",eng:"Strict: IELTS 7.0 all bands (non-negotiable)",pts:"65",icon:"RN",color:"var(--green)",
+    strengths:["Tier 1 priority, lowest cutoffs (65 pts)","Strongest job security in Australia","Employer sponsorship widely available","High demand across all states","Good salary (AUD $75K-$95K)"],
+    considerations:["Strict IELTS 7.0 in ALL bands","Physically and emotionally demanding","2-3 year commitment","Higher tuition fees"]},
+  {id:"social_work",name:"Social Work",qual:"Master of Social Work (PQ)",dur:"2 years",cost:"AUD $60K-$80K",occ:"Social Worker",tier:2,timeline:"2-3 years after graduation",eng:"Strict: IELTS 7.0 all bands for AASW",pts:"70",icon:"SW",color:"var(--teal)",
+    strengths:["Tier 2 priority with low cutoffs","No post-study work experience needed","23% projected job growth over 5 years","NDIS and aged care expansion","Available at regional universities"],
+    considerations:["IELTS 7.0 all bands required","May need prerequisite subjects","Emotionally demanding","2-year commitment"]},
+  {id:"teaching",name:"Teaching (Secondary)",qual:"Master of Teaching",dur:"1.5-2 years",cost:"AUD $50K-$70K",occ:"Secondary School Teacher",tier:2,timeline:"2-3 years after graduation",eng:"Very strict: IELTS 7.5 overall, L/S 8.0",pts:"70-75",icon:"MT",color:"var(--navy-light)",
+    strengths:["Structural shortage in maths, science, tech","Victorian scholarships (up to AUD $16K)","Stable long-term career","Straightforward AITSL assessment","On MLTSSL: 189, 190, 491"],
+    considerations:["Highest English requirement","Need a teachable subject area","Classroom management challenges"]},
+  {id:"trades",name:"Trades (Electrical / Plumbing / Carpentry)",qual:"Certificate III at TAFE",dur:"2 years",cost:"AUD $16K-$36K",occ:"Electrician / Plumber / Carpenter",tier:3,timeline:"4-5 years (incl. JRP)",eng:"Moderate: IELTS 6.0",pts:"65",icon:"TR",color:"#E07C3E",
+    strengths:["Lowest invitation cutoffs (65 pts)","Cheapest tuition of any pathway","High earning (AUD $80K-$120K)","Practical, hands-on learning","Strong regional demand"],
+    considerations:["TRA Job Ready Program adds 2-3 years","485 visa only 18 months","Physically demanding","Licensing varies by state"]},
+  {id:"it",name:"IT / Cyber Security",qual:"Master of IT or Cyber Security",dur:"2 years",cost:"AUD $70K-$90K",occ:"Software Engineer / ICT Security",tier:4,timeline:"3.5-4 years",eng:"Moderate: IELTS 6.0 + Professional Year",pts:"85-95",icon:"IT",color:"var(--gray-600)",
+    strengths:["Highest earning (AUD $90K-$140K)","Professional Year available (+5 pts)","Strong employer sponsorship","Transferable global skills","VIC, ACT, WA nominate IT"],
+    considerations:["Tier 4: very few 189 invitations","Needs 85-95 points","ACS requires 1yr work or PY","Most expensive pathway"]}
+];
+
+let answers = {};
+let currentQ = 0;
+
+function startQuiz(){
+  document.getElementById('introScreen').classList.remove('active');
+  document.getElementById('quizScreen').classList.add('active');
+  document.getElementById('progressWrap').classList.add('show');
+  document.getElementById('heroSection').querySelector('h1').innerHTML='Australian PR <span>Course Finder</span>';
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const q = QUESTIONS[currentQ];
+  const wrap = document.getElementById('quizScreen');
+  let html = '';
+  if(q.section) html += `<div class="section-divider"><span class="line"></span><span class="tag">${q.section}</span><span class="line"></span></div>`;
+  html += `<div class="question-card"><div class="q-number">${String(currentQ+1).padStart(2,'0')}</div>`;
+  html += `<div class="q-label">${q.label}</div><div class="q-hint">${q.hint}</div><div class="options">`;
+  q.opts.forEach(o => {
+    const sel = answers[q.id] === o.v ? ' selected' : '';
+    html += `<div class="option${sel}" onclick="selectOpt('${q.id}','${o.v}',this)"><div class="option-radio"></div><div class="option-text">${o.l}${o.s?'<small>'+o.s+'</small>':''}</div></div>`;
+  });
+  html += '</div></div>';
+  if(currentQ > 0) html += `<button class="btn-back" onclick="prevQ()">&larr; Previous question</button>`;
+  wrap.innerHTML = html;
+  updateProgress();
+  // Update hero
+  const hero = document.getElementById('heroSection');
+  hero.querySelector('h1').innerHTML = q.label;
+  hero.querySelector('p').textContent = q.hint;
+  hero.style.padding = '2rem 1.5rem 1.5rem';
+  hero.querySelector('.hero-brand').style.display = 'none';
+  hero.querySelector('.hero-stats').style.display = 'none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function selectOpt(qId, val, el){
+  answers[qId] = val;
+  el.closest('.options').querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  setTimeout(()=>{
+    if(currentQ < QUESTIONS.length - 1){ currentQ++; renderQuestion(); }
+    else showResults();
+  }, 250);
+}
+
+function prevQ(){ if(currentQ > 0){ currentQ--; renderQuestion(); } }
+
+function updateProgress(){
+  const pct = ((currentQ+1)/QUESTIONS.length)*100;
+  document.getElementById('progressFill').style.width = pct+'%';
+  document.getElementById('progressCount').textContent = (currentQ+1)+' / '+QUESTIONS.length;
+}
+
+function evaluate(){
+  const scores = {};
+  COURSES.forEach(c => {
+    let s = 50; const r = [];
+    const q = answers.qualification;
+    if(c.id==='ece'){if(['bachelor','master','phd'].includes(q)){s+=20;r.push('Your existing degree qualifies you for direct entry');}else{s-=30;r.push('Requires a bachelor\'s degree for entry');}}
+    if(c.id==='nursing'){if(['bachelor','master','phd'].includes(q)){s+=10;r.push('Eligible for graduate-entry nursing (2 years)');}else{s-=5;r.push('Would need the full 3-year program');}}
+    if(c.id==='social_work'){if(['social','education','health'].includes(answers.field)){s+=15;r.push('Your background aligns with prerequisites');}else{s-=10;r.push('May need bridging subjects for entry');}if(['bachelor','master','phd'].includes(q))s+=10;}
+    if(c.id==='teaching'){if(['bachelor','master','phd'].includes(q)){s+=10;r.push('Your degree qualifies you for the Master of Teaching');}else{s-=30;r.push('Requires a bachelor\'s degree');}}
+    if(c.id==='trades'){if(['highschool','diploma'].includes(q)){s+=10;r.push('No prior degree required');}if(['master','phd'].includes(q)){s-=10;r.push('Significant shift from your background');}}
+    if(c.id==='it'){if(answers.field==='it'){s+=20;r.push('Directly builds on your IT background');}else r.push('Career switch into IT: steep learning curve');if(['bachelor','master','phd'].includes(q))s+=5;}
+    const eng=answers.english;
+    if(['nursing','social_work'].includes(c.id)){if(eng==='8'){s+=15;r.push('Your English exceeds the IELTS 7.0 requirement');}else if(eng==='7'){s+=5;r.push('You meet the IELTS 7.0 requirement');}else{s-=20;r.push('IELTS 7.0 in all bands mandatory: improvement needed');}}
+    if(c.id==='teaching'){if(eng==='8'){s+=10;r.push('Close to IELTS 7.5 / L&S 8.0 requirement');}else{s-=25;r.push('Teaching has the highest English bar');}}
+    if(['ece','trades','it'].includes(c.id)){if(eng==='below6'){s-=10;r.push('Need at least IELTS 6.0-6.5');}else{s+=5;r.push('Your English meets this pathway\'s requirements');}}
+    const b=answers.budget;
+    if(['ece','trades'].includes(c.id)){if(b==='low'){s+=15;r.push('Fits well within your budget');}else s+=5;}
+    if(['it','nursing'].includes(c.id)){if(b==='low'){s-=15;r.push('May exceed your stated budget');}else if(b==='mid')s-=5;else s+=5;}
+    if(['social_work','teaching'].includes(c.id)){if(b==='low'){s-=10;r.push('Tuition above your stated budget');}else s+=5;}
+    const t=answers.time;
+    if(c.id==='ece'){s+=t==='1yr'?20:t==='2yr'?15:10;if(t==='1yr')r.push('Only 1 year of study: matches your timeline');}
+    if(c.id==='trades'){if(t==='1yr'){s-=15;r.push('2-year course + JRP exceeds your timeline');}else if(t==='any')s+=10;}
+    if(['nursing','social_work','teaching','it'].includes(c.id)){if(t==='1yr'){s-=10;r.push('Requires 1.5-2+ years of study');}else if(t==='2yr')s+=5;else s+=10;}
+    if(['open','anywhere'].includes(answers.location)){s+=5;r.push('Regional study adds 5 points and easier nomination');}
+    if(answers.location==='metro'&&c.id==='trades'){s-=5;r.push('Trades strongest in regional areas');}
+    const p=answers.priority;
+    if(p==='speed'){if(c.id==='ece')s+=20;if(c.id==='trades')s-=10;if(c.id==='it')s-=10;}
+    if(p==='cost'){if(c.id==='trades')s+=15;if(c.id==='ece')s+=10;if(c.id==='it')s-=10;}
+    if(p==='career'){if(c.id==='it')s+=15;if(c.id==='nursing')s+=15;}
+    if(p==='ease'){if(c.id==='ece')s+=15;if(c.id==='teaching')s-=10;}
+    if(answers.language!=='none'&&!r.some(x=>x.includes('NAATI')))r.push('NAATI CCL in your language = 5 easy bonus points');
+    scores[c.id]={score:Math.max(0,Math.min(100,s)),reasons:r.slice(0,5)};
+  });
+  return scores;
+}
+
+function calcPoints(){
+  let pts=0;const bd=[];
+  const aq=QUESTIONS[0].opts.find(o=>o.v===answers.age);if(aq){pts+=aq.pts;bd.push({l:'Age',v:aq.pts});}
+  const qp=answers.qualification==='phd'?20:['master','bachelor'].includes(answers.qualification)?15:answers.qualification==='diploma'?10:0;
+  pts+=qp;bd.push({l:'Qualification',v:qp});
+  const eq=QUESTIONS[3].opts.find(o=>o.v===answers.english);if(eq){pts+=eq.pts;bd.push({l:'English',v:eq.pts});}
+  if(answers.language!=='none'){pts+=5;bd.push({l:'NAATI CCL',v:5});}
+  pts+=5;bd.push({l:'Aus Study',v:5});
+  const wq=QUESTIONS[8].opts.find(o=>o.v===answers.work_au);if(wq&&wq.pts>0){pts+=wq.pts;bd.push({l:'AU Work',v:wq.pts});}
+  if(['open','anywhere'].includes(answers.location)){pts+=5;bd.push({l:'Regional',v:5});}
+  return{total:pts,bd};
+}
+
+function showResults(){
+  document.getElementById('quizScreen').classList.remove('active');
+  document.getElementById('resultScreen').classList.add('active');
+  document.getElementById('progressWrap').classList.remove('show');
+  const hero=document.getElementById('heroSection');
+  hero.querySelector('h1').innerHTML='Your Course <span>Assessment</span>';
+  hero.querySelector('p').textContent='Based on your responses, here\'s your personalised pathway snapshot';
+  hero.style.padding='2rem 1.5rem 1.5rem';
+
+  const scores=evaluate();
+  const pts=calcPoints();
+  const ranked=COURSES.map(c=>({...c,...scores[c.id]})).sort((a,b)=>b.score-a.score);
+  const circ=2*Math.PI*80;
+  const offset=circ-(pts.total/100)*circ;
+  const ringColor=pts.total>=75?'var(--green)':pts.total>=50?'var(--gold)':'var(--red)';
+
+  let html=`<div class="results-panel">`;
+  // Score ring
+  html+=`<div class="score-ring"><svg width="180" height="180" viewBox="0 0 180 180"><circle class="bg" cx="90" cy="90" r="80"/><circle class="fg" id="scoreRing" cx="90" cy="90" r="80" style="stroke:${ringColor}"/></svg><div class="score-text"><div class="score-num" id="scoreNum">0</div><div class="score-label">Points Est.</div></div></div>`;
+  html+=`<div style="text-align:center;font-size:.75rem;color:var(--gray-400);margin-bottom:.5rem">Estimated points without state nomination</div>`;
+  html+=`<div class="points-tags">${pts.bd.map(b=>`<span class="points-tag">${b.l}: <strong>+${b.v}</strong></span>`).join('')}</div>`;
+  html+=`<div style="text-align:center;font-size:.7rem;color:var(--gray-400);font-style:italic;margin-bottom:1.75rem">Add +5 (Subclass 190) or +15 (Subclass 491) with state nomination</div>`;
+
+  // Course cards
+  html+=`<div style="font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-400);margin-bottom:.75rem">Courses ranked by match score</div>`;
+  ranked.forEach((c,i)=>{
+    const isTop=i===0;
+    const mc=c.score>=70?'match-high':c.score>=50?'match-med':'match-low';
+    const iconBg=isTop?'var(--gold)':'var(--navy-mid)';
+    html+=`<div class="course-card${isTop?' top':''}" onclick="toggleDetails('${c.id}')">`;
+    if(isTop)html+=`<div class="rec-badge">Recommended</div>`;
+    html+=`<div class="course-head"><div class="course-icon" style="background:${iconBg}">${c.icon}</div><div style="flex:1"><div class="course-meta">#${i+1} &middot; ${c.qual} &middot; ${c.dur}</div><div class="course-name">${c.name}</div></div><div class="course-match ${mc}">${c.score}%</div></div>`;
+    html+=`<div class="course-tags"><span><b>Cost:</b> ${c.cost}</span><span><b>PR Timeline:</b> ${c.timeline}</span><span><b>Tier:</b> Tier ${c.tier}</span><span><b>Points:</b> ${c.pts}</span></div>`;
+    html+=`<div class="course-details" id="det-${c.id}">`;
+    html+=`<div class="detail-label">Why this matches your profile</div>`;
+    c.reasons.forEach(r=>{html+=`<div class="detail-row"><span style="color:var(--gold);flex-shrink:0">&rarr;</span><span>${r}</span></div>`;});
+    html+=`<div class="detail-label" style="margin-top:.75rem">English Requirement</div><div class="detail-row">${c.eng}</div>`;
+    html+=`<div class="detail-label" style="margin-top:.75rem">Key Strengths</div>`;
+    c.strengths.slice(0,3).forEach(s=>{html+=`<div class="detail-row"><span style="color:var(--green);flex-shrink:0">&#10003;</span><span>${s}</span></div>`;});
+    html+=`</div><div class="tap-hint">Tap for details</div></div>`;
+  });
+
+  // CTA
+  html+=`<div class="result-cta"><h3>Ready for a Professional Assessment?</h3><p>This self-assessment is indicative only. Immigration law is complex and changes frequently. A registered migration agent can provide accurate, personalised advice.</p><a href="https://onederland.com.au/contact-us/" target="_blank" rel="noopener" class="btn-book">Book Free Consultation &rarr;</a><div class="guarantee"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>100% money-back guarantee | MARN 0961448</div></div>`;
+  html+=`<button class="btn-retake" onclick="resetQuiz()">Retake Assessment</button>`;
+  html+=`</div>`;
+
+  document.getElementById('resultScreen').innerHTML=html;
+
+  // Animate ring
+  setTimeout(()=>{document.getElementById('scoreRing').style.strokeDashoffset=offset;},100);
+  let cur=0;const step=Math.ceil(pts.total/40);
+  const counter=setInterval(()=>{cur+=step;if(cur>=pts.total){cur=pts.total;clearInterval(counter);}document.getElementById('scoreNum').textContent=cur;},30);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleDetails(id){
+  const el=document.getElementById('det-'+id);
+  const hint=el.closest('.course-card').querySelector('.tap-hint');
+  if(el.classList.contains('open')){el.classList.remove('open');hint.textContent='Tap for details';}
+  else{document.querySelectorAll('.course-details.open').forEach(d=>{d.classList.remove('open');d.closest('.course-card').querySelector('.tap-hint').textContent='Tap for details';});el.classList.add('open');hint.textContent='Tap to collapse';}
+}
+
+function resetQuiz(){
+  answers={};currentQ=0;
+  document.getElementById('resultScreen').classList.remove('active');
+  document.getElementById('resultScreen').innerHTML='';
+  document.getElementById('introScreen').classList.add('active');
+  const hero=document.getElementById('heroSection');
+  hero.querySelector('h1').innerHTML='Australian PR <span>Course Finder</span>';
+  hero.querySelector('p').textContent='Answer 10 questions to discover which study pathway gives you the highest chance of permanent residency. Takes under 3 minutes.';
+  hero.style.padding='3rem 1.5rem 2.5rem';
+  hero.querySelector('.hero-brand').style.display='';
+  hero.querySelector('.hero-stats').style.display='';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
